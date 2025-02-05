@@ -1,0 +1,58 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Cloud Integration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container gap-10">
+        <nav class="navbar navbar-expand-lg bg-danger">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="navbarText">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link text-white" aria-current="page" href="{% url 'home' %}">home 🏠</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{% url 'logout' %}">logout 🚪</a>
+                        </li>
+
+                        <div class="btn-group w-auto">
+                            <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                about me 👤
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-item text-danger" >{{user.username}}</li>
+                                <li class="dropdown-item text-danger" >{{user.get_relationship_status_display}}</li>
+                                <li class="dropdown-item text-danger" >{{user.bio}}</li>
+                            </ul>
+                        </div>
+
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{% url 'register' %}">register 📝</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{% url 'login' %}">login 🔑</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                    <span class="navbar-text text-white">Let's deploy it 🚀 </span>
+                </div>
+            </div>
+        </nav>
+        <div id="content" class=" container d-flex justify-content-center align-items-center ">
+            {% block content %}{% endblock content %}
+        </div>
+    </div>
+
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+           integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+
+</html>
+
