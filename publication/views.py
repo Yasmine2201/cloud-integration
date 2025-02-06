@@ -1,7 +1,19 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+
+from publication.services import PublicationService
+
 
 # Create your views here.
+# Create your views here.
+def welcome_page(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+    last_publication = PublicationService.get_last_publication()
+
+    print("last publication :",last_publication)
+    return render(request, 'publication/welcome.html', {"last_publication": last_publication})
+
 @login_required
 def home_page(request):
     user = request.user

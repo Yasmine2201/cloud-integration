@@ -6,10 +6,11 @@
           rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
-    <div class="container gap-10">
-        <nav class="navbar navbar-expand-lg bg-danger">
+    <div class="container-main gap-10">
+        <nav class="navbar navbar-expand-sm bg-dark px-5">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarText">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -18,7 +19,7 @@
                             <a class="nav-link text-white" aria-current="page" href="{% url 'home' %}">home 🏠</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="{% url 'logout' %}">logout 🚪</a>
+                            <a class="nav-link text-light" href="{% url 'logout' %}">logout 🚪</a>
                         </li>
 
                         <div class="btn-group w-auto">
@@ -45,7 +46,8 @@
                 </div>
             </div>
         </nav>
-        <div id="content" class=" container d-flex justify-content-center align-items-center ">
+
+        <div id="content" class="container d-flex flex-column align-items-center ">
             {% block content %}{% endblock content %}
         </div>
     </div>

@@ -23,7 +23,7 @@ import publication.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',authentication.views.welcome_page, name='welcome'),
+    path('',publication.views.welcome_page, name='welcome'),
     path('login',authentication.views.login_page, name='login'),
     path('logout/',authentication.views.logout_user, name='logout'),
     path('register/',authentication.views.registration_page, name='register'),
