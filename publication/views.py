@@ -1,32 +1,28 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
+from publication.models import Like
 from publication.services import PublicationService
 
+@login_required
+def like_publication(request, publication_id):
+    publication = PublicationService.get_publication_by_id(publication_id)
+    PublicationService.like_publication(publication, request.user)
+    return render(request, 'publication/home.html', {"publication": publication, "user": request.user})
 
-# Create your views here.
-# Create your views here.
-def welcome_page(request):
-    if request.user.is_authenticated:
-        return redirect('home')
-    last_publication = PublicationService.get_last_publication()
-
-    print("last publication :",last_publication)
-    return render(request, 'publication/welcome.html', {"last_publication": last_publication})
+@login_required
+def dislike_publication(request, publication_id):
+    publication = PublicationService.get_publication_by_id(publication_id)
+    PublicationService.dislike_publication(publication, request.user)
+    return render(request, 'publication/home.html', {"publication": publication, "user": request.user})
 
 @login_required
 def home_page(request):
     user = request.user
-    # try:
-    #     letter = Letter.objects.get(author=user)
-    #     html_content = __text_to_html_content(letter.content)
-    #     letter = {
-    #         'id': letter.id,
-    #         'title': letter.title,
-    #         'author': letter.author,
-    #         'content': html_content
-    #     }
-    # except Letter.DoesNotExist:
-    #     letter = None
-    # return render(request, 'love/home.html', {"letter": letter, "user": user})
-    return render(request, 'publication/home.html')
+    publications = PublicationService.get_all_publications(user)
+    for publication in publications:
+        publication.number_likes = PublicationService.get_likes(publication)
+        publication.has_user_liked = PublicationService.has_user_liked(publication, user)
+
+    print("publications :", publications)
+    return render(request, 'publication/home.html', {"all_publications": publications, "user": user})

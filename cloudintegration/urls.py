@@ -23,11 +23,13 @@ import publication.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',publication.views.welcome_page, name='welcome'),
+    path('',authentication.views.welcome_page, name='welcome'),
     path('login',authentication.views.login_page, name='login'),
     path('logout/',authentication.views.logout_user, name='logout'),
     path('register/',authentication.views.registration_page, name='register'),
     path('home/', publication.views.home_page, name='home'),
+    path('like/<int:publication_id>/', publication.views.like_publication, name='like'),
+    path('dislike/<int:publication_id>/', publication.views.dislike_publication, name='dislike'),
     # path('write_letter/', love.views.write_letter, name='write_letter'),
     # path('edit_letter/<int:letter_id>/', love.views.edit_letter, name='edit_letter'),
 

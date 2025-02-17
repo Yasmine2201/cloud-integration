@@ -1,0 +1,56 @@
+<div class="card letter-container p-2 border border-dark-subtle border-5 w-75">
+
+    <div class="card-body">
+        <div>
+            <h5 class="card-title">{{ publication.title }}</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">{{ publication.publisher.username }}</h6>
+        </div>
+        <hr>
+
+        <div class="letter">
+            <p class="card-text text-white">{{ publication.body }}</p>
+        </div>
+        <div>
+            <p class="card-text text-muted">{{ publication.number_likes }} likes</p>
+        </div>
+        <hr>
+
+        <div>
+            {% csrf_token %}
+            <button class="btn btn-outline-primary mx-2 {% if publication.has_user_liked %}active{% endif %}" onclick="toggle(this)" data-id="{{ publication.id }}">
+                <i class="fas fa-thumbs-up"></i>
+            </button>
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+   function toggle(element) {
+    const publicationId = element.getAttribute('data-id');
+    const url = element.classList.contains('active') ? `/dislike/${publicationId}/` : `/like/${publicationId}/`;
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'X-User-ID': '{{ user.id }}',
+            'X-CSRFToken': '{{ csrf_token }}'
+        }
+    }).then(response => {
+        if (response.ok) {
+            element.classList.toggle('active');
+            const likesCountElement = element.closest('.card-body').querySelector('.card-text.text-muted');
+            let likesCount = parseInt(likesCountElement.textContent);
+            if (element.classList.contains('active')) {
+                likesCount++;
+            } else {
+                likesCount--;
+            }
+            likesCountElement.textContent = `${likesCount} likes`;
+        }
+    });
+}
+
+
+</script>

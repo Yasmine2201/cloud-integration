@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, logout, login
 from django.shortcuts import render, redirect
 
 from authentication.forms import RegistrationForm, LoginForm
+from publication.services import PublicationService
 
 
 # Create your views here.
@@ -10,9 +11,12 @@ from authentication.forms import RegistrationForm, LoginForm
 
 # Create your views here.
 def welcome_page(request):
+    publications = PublicationService.get_all_publications()
     if request.user.is_authenticated:
-        return redirect('home')
-    return render(request, 'authentication/welcome.html')
+        return redirect('home', {"all_publications": publications, "user": request.user})
+
+    return render(request, 'welcome.html', {"all_publications": publications})
+
 def registration_page(request):
     if request.user.is_authenticated:
         return redirect('home')
