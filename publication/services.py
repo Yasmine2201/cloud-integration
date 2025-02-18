@@ -4,7 +4,7 @@ from publication.models import Publication, Like
 class PublicationService:
 
     @staticmethod
-    def create_publication(title, body, publisher):
+    def create_publication(publisher, title, body):
         publication = Publication(title=title, body=body, publisher=publisher)
         publication.save()
         return publication
@@ -32,11 +32,13 @@ class PublicationService:
         return publication
 
     @staticmethod
-    def get_all_publications(user=None):
-        if user is None:
-            return Publication.objects.all().order_by('-created_at')
+    def get_all_publications():
+       return Publication.objects.all().order_by('-created_at')
 
-        return Publication.objects.exclude(publisher=user).all().order_by('-created_at')
+
+    @staticmethod
+    def get_my_publications(user):
+        return Publication.objects.filter(publisher=user).all().order_by('-created_at')
 
     ##################################################################
     @staticmethod

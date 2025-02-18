@@ -28,8 +28,13 @@ urlpatterns = [
     path('logout/',authentication.views.logout_user, name='logout'),
     path('register/',authentication.views.registration_page, name='register'),
     path('home/', publication.views.home_page, name='home'),
+    path('create/', publication.views.create_publication, name='create'),
     path('like/<int:publication_id>/', publication.views.like_publication, name='like'),
     path('dislike/<int:publication_id>/', publication.views.dislike_publication, name='dislike'),
+    path('delete/<int:publication_id>/', publication.views.delete_publication, name='delete'),
+    path('edit/<int:publication_id>/', publication.views.edit_publication, name='edit'),
+    path('profile/', authentication.views.profile_page, name='profile'),
+
     # path('write_letter/', love.views.write_letter, name='write_letter'),
     # path('edit_letter/<int:letter_id>/', love.views.edit_letter, name='edit_letter'),
 

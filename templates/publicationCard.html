@@ -17,40 +17,81 @@
 
         <div>
             {% csrf_token %}
-            <button class="btn btn-outline-primary mx-2 {% if publication.has_user_liked %}active{% endif %}" onclick="toggle(this)" data-id="{{ publication.id }}">
+           <div class="d-flex justify-content-between">
+            <button class="btn btn-outline-primary mx-2 {% if publication.has_user_liked %}active{% endif %}"
+                    onclick="toggle(this)" data-id="{{ publication.id }}">
                 <i class="fas fa-thumbs-up"></i>
             </button>
 
+            {% if publication.publisher.id == user.id %}
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-outline-warning mx-2" data-bs-toggle="modal" data-bs-target="#publicationModal"
+                        data-title="{{publication.title}}" data-message="{{publication.body}}">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <div>
+                    {% include 'publicationModal.html' with publication=publication %}
+                </div>
+
+                <button class="btn btn-outline-danger mx-2" onclick="deletePublication(this)" data-id="{{ publication.id }}">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+
+            </div>
+            {% endif %}
+            </div>
         </div>
+
     </div>
 
 </div>
 
 <script>
-   function toggle(element) {
-    const publicationId = element.getAttribute('data-id');
-    const url = element.classList.contains('active') ? `/dislike/${publicationId}/` : `/like/${publicationId}/`;
+    function deletePublication(element) {
+        const publicationId = element.getAttribute('data-id');
+        const url = `/delete/${publicationId}/`;
 
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'X-User-ID': '{{ user.id }}',
-            'X-CSRFToken': '{{ csrf_token }}'
-        }
-    }).then(response => {
-        if (response.ok) {
-            element.classList.toggle('active');
-            const likesCountElement = element.closest('.card-body').querySelector('.card-text.text-muted');
-            let likesCount = parseInt(likesCountElement.textContent);
-            if (element.classList.contains('active')) {
-                likesCount++;
-            } else {
-                likesCount--;
+        fetch(url, {
+            method: 'DELETE',
+            headers: {
+                'X-User-ID': '{{ user.id }}',
+                'X-CSRFToken': '{{ csrf_token }}'
             }
-            likesCountElement.textContent = `${likesCount} likes`;
-        }
-    });
-}
+        })
+            .then(response => response.json())
+            .then(() => {
+                location.reload();
+            });
+    }
+
+    function toggle(element) {
+        const publicationId = element.getAttribute('data-id');
+        const url = element.classList.contains('active') ? `/dislike/${publicationId}/` : `/like/${publicationId}/`;
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'X-User-ID': '{{ user.id }}',
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+            .then(response => response.json())
+            .then(() => {
+
+                element.classList.toggle('active');
+                const likesCountElement = element.closest('.card-body').querySelector('.card-text.text-muted');
+                let likesCount = parseInt(likesCountElement.textContent);
+                if (element.classList.contains('active')) {
+                    likesCount++;
+                } else {
+                    likesCount--;
+                }
+                likesCountElement.textContent = `${likesCount} likes`;
+
+            });
+    }
+
+
 
 
 </script>

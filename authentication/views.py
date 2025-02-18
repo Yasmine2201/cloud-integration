@@ -11,10 +11,9 @@ from publication.services import PublicationService
 
 # Create your views here.
 def welcome_page(request):
-    publications = PublicationService.get_all_publications()
     if request.user.is_authenticated:
-        return redirect('home', {"all_publications": publications, "user": request.user})
-
+        return redirect('home')
+    publications = PublicationService.get_all_publications()
     return render(request, 'welcome.html', {"all_publications": publications})
 
 def registration_page(request):
@@ -52,3 +51,11 @@ def logout_user(request):
 
     logout(request)
     return redirect('welcome')
+
+def profile_page(request):
+    publications = PublicationService.get_my_publications(request.user)
+    for publication in publications:
+        publication.number_likes = PublicationService.get_likes(publication)
+        publication.has_user_liked = PublicationService.has_user_liked(publication, request.user)
+
+    return render(request, 'authentication/profile.html', {"all_publications": publications, "user": request.user})

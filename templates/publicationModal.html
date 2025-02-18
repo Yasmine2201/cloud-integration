@@ -1,0 +1,67 @@
+<div class="modal fade" id="publicationModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modalLabel">Your publication</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="title" class="col-form-label">Title</label>
+                        <input type="text" class="form-control" id="title">
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="col-form-label">Message</label>
+                        <textarea class="form-control" id="message"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="publish(this)" data ="{{publication}}">Publish</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var publicationModal = document.getElementById('publicationModal');
+
+        publicationModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget; // Button that triggered the modal
+            var title = button.getAttribute('data-title'); // Get title from button
+            var message = button.getAttribute('data-message'); // Get message from button
+
+            // Update modal fields
+            publicationModal.querySelector('#title').value = title;
+            publicationModal.querySelector('#message').value = message;
+        });
+    });
+
+    function publish(element) {
+        const title = document.getElementById('title').value;
+        const body = document.getElementById('message').value;
+        const publication = element.getAttribute('data');
+
+        const url = publication ? `/edit/${publication.id}/` : `/create/`;
+
+        console.log(title, body);
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({title: title, body: body})
+        })
+            .then(response => response.json())
+            .then(() => {
+                location.reload(); // Reload the page to see the new publication
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
+</script>
