@@ -17,14 +17,12 @@ def create_publication(request):
 
 @login_required
 def like_publication(request, publication_id):
-    publication = PublicationService.get_publication_by_id(request.user, publication_id)
-    PublicationService.like_publication(publication, request.user)
+    PublicationService.like_publication(publication_id, request.user)
     return JsonResponse({"message": "Publication liked successfully"})
 
 @login_required
 def dislike_publication(request, publication_id):
-    publication = PublicationService.get_publication_by_id(request.user, publication_id)
-    PublicationService.dislike_publication(publication, request.user)
+    PublicationService.dislike_publication(publication_id, request.user)
     return JsonResponse({"message": "Publication disliked successfully"})
 
 @login_required
@@ -48,5 +46,4 @@ def home_page(request):
         publication.number_likes = PublicationService.get_likes(publication)
         publication.has_user_liked = PublicationService.has_user_liked(publication, user)
 
-    print("publications :", publications)
     return render(request, 'publication/home.html', {"all_publications": publications, "user": user})

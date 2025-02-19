@@ -11,37 +11,51 @@
 </head>
 <body>
 <div class="main-container gap-10">
-    <nav class="navbar navbar-expand-md bg-dark px-5">
+    <nav class="navbar navbar-expand-sm px-5 shadow">
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav mb-lg-0 ms-5 w-100">
                     {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link text-white" aria-current="page" href="{% url 'home' %}">home 🏠</a>
+                        <a class="nav-link d-flex flex-column align-items-center secondary-color" aria-current="page"
+                           href="{% url 'home' %}">
+                            <i class="fas fa-home"></i>
+                            <span>home</span>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{% url 'profile' %}">profile 👤</a>
+                        <a class="nav-link d-flex flex-column align-items-center secondary-color" href="{% url 'profile' %}">
+                            <i class="fas fa-user"></i>
+                            <span>profile</span>
+                        </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{% url 'logout' %}">logout 🚪</a>
+                    <li class="nav-item ms-auto">
+                        <a class="nav-link d-flex flex-column align-items-center secondary-color" href="{% url 'logout' %}">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>logout</span>
+                        </a>
                     </li>
-
-
                     {% else %}
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{% url 'register' %}">register 📝</a>
+                        <a class="nav-link d-flex flex-column align-items-center secondary-color" href="{% url 'login' %}">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span>login</span>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{% url 'login' %}">login 🔑</a>
+                        <a class="nav-link d-flex flex-column align-items-center secondary-color" href="{% url 'register' %}">
+                            <i class="fas fa-user-plus"></i>
+                            <span>register</span>
+                        </a>
                     </li>
-                    {% endif %}
+                    {%endif %}
                 </ul>
-                <span class="navbar-text text-white">Let's deploy it 🚀 </span>
+
             </div>
         </div>
     </nav>
 
-    <div id="content" class="main-container d-flex flex-column align-items-center" >
+    <div id="content" class="main-container d-flex flex-column align-items-center">
         {% block content %}{% endblock content %}
     </div>
 </div>

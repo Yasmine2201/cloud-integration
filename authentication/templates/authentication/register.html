@@ -1,39 +1,49 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="border border-dark-subtle border-5 p-3 mt-5">
+<div class="mt-5 p-3 shadow rounded ">
+    <div class="p-1 rounded text-center">
+        <img src="https://static.vecteezy.com/system/resources/previews/015/815/200/original/kindness-icon-design-free-vector.jpg">
+        <h6 class="text-center primary-color">Register to feel better</h6>
+        <hr>
+    </div>
     <form method="post">
         {% csrf_token %}
-        <h4 class="text-center">Register to discover more</h4>
-        <hr>
         <div class="mb-3">
-            <label class="form-label">Username</label>
+            <label class="form-label primary-color">Username</label>
             {{ form.username }}
         </div>
 
         <div class="mb-3">
 
-            <label class="form-label">Email</label>
+            <label class="form-label primary-color">Email</label>
             {{ form.email }}
-
         </div>
         <div class="mb-3 ">
 
-            <label class="form-label">Password</label>
+            <label class="form-label primary-color">Password</label>
             {{ form.password1 }}
 
         </div>
         <div class="mb-3">
 
-            <label class="form-label">Confirm Password</label>
+            <label class="form-label primary-color">Confirm Password</label>
             {{ form.password2 }}
-
         </div>
 
         <hr>
-        <button type="submit" class="btn btn-outline-primary d-block w-100">Register</button>
+
+        <button type="submit" class="btn custom-btn w-100">Submit</button>
+        <p class="text-center mt-2">You already have an account? <a class="primary-color" href="{% url 'login' %}">login</a></p>
+
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger mt-3">
+            {% for error in form.non_field_errors %}
+            <span class="d-block text-center">{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
     </form>
 </div>
 
-<p class="text-center mt-2">You already have an account? <a href="{% url 'login' %}">Login Now</a></p>
 {% endblock content %}

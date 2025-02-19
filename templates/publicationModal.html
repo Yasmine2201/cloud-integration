@@ -1,30 +1,31 @@
 <div class="modal fade" id="publicationModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="modalLabel">Your publication</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="p-1 rounded text-center">
+                <img src="https://static.vecteezy.com/system/resources/previews/015/815/200/original/kindness-icon-design-free-vector.jpg">
+                <h6 class="text-center primary-color">Your message</h6>
             </div>
             <div class="modal-body">
                 <form>
-                    <div class="mb-3">
-                        <label for="title" class="col-form-label">Title</label>
+                    <div class="mb-2">
+                        <label for="title" class="form-label primary-color">Title</label>
                         <input type="text" class="form-control" id="title">
                     </div>
-                    <div class="mb-3">
-                        <label for="message" class="col-form-label">Message</label>
-                        <textarea class="form-control" id="message"></textarea>
+                    <div class="mb-2">
+                        <label for="message" class="form-label primary-color">Message</label>
+                        <textarea class="form-control" rows="5" id="message"></textarea>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn custom-btn" onclick="publish()">Send</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="publish(this)" data ="{{publication}}">Publish</button>
             </div>
         </div>
     </div>
 </div>
 <script>
+    let publicationID = null;
     document.addEventListener('DOMContentLoaded', function () {
         var publicationModal = document.getElementById('publicationModal');
 
@@ -32,20 +33,20 @@
             var button = event.relatedTarget; // Button that triggered the modal
             var title = button.getAttribute('data-title'); // Get title from button
             var message = button.getAttribute('data-message'); // Get message from button
+            var id = button.getAttribute('data-id'); // Get id from button
 
             // Update modal fields
             publicationModal.querySelector('#title').value = title;
             publicationModal.querySelector('#message').value = message;
+            publicationID = id;
         });
     });
 
-    function publish(element) {
+    function publish() {
         const title = document.getElementById('title').value;
         const body = document.getElementById('message').value;
-        const publication = element.getAttribute('data');
 
-        const url = publication ? `/edit/${publication.id}/` : `/create/`;
-
+        const url = publicationID ? `/edit/${publicationID}/` : '/create/';
         console.log(title, body);
 
         fetch(url, {

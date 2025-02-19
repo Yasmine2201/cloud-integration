@@ -42,27 +42,30 @@ class PublicationService:
 
     ##################################################################
     @staticmethod
-    def like_publication(publication, author):
+    def like_publication(publication_id, author):
 
-        if not Like.objects.filter(publication=publication, author=author).exists():
-            like = Like(publication=publication, author=author, is_liked=True)
+        publication_instance = Publication.objects.get(id=publication_id)
+        if not Like.objects.filter(publication=publication_instance, author=author).exists():
+            like = Like(publication=publication_instance, author=author, is_liked=True)
             like.save()
             return like
 
         else:
-            like = Like.objects.get(publication=publication, author=author)
+            like = Like.objects.get(publication=publication_instance, author=author)
             like.is_liked = True
             like.save()
             return like
 
     @staticmethod
-    def dislike_publication(publication, author):
-        if not Like.objects.filter(publication=publication, author=author).exists():
-            dislike = Like(publication=publication, author=author, is_liked=False)
+    def dislike_publication(publication_id, author):
+        publication_instance = Publication.objects.get(id=publication_id)
+
+        if not Like.objects.filter(publication=publication_instance, author=author).exists():
+            dislike = Like(publication=publication_instance, author=author, is_liked=False)
             dislike.save()
             return dislike
         else:
-            dislike = Like.objects.get(publication=publication, author=author)
+            dislike = Like.objects.get(publication=publication_instance, author=author)
             dislike.is_liked = False
             dislike.save()
 
@@ -71,10 +74,6 @@ class PublicationService:
     @staticmethod
     def get_likes(publication):
         return Like.objects.filter(publication=publication, is_liked=True).count()
-
-    @staticmethod
-    def get_dislikes(publication):
-        return Like.objects.filter(publication=publication, is_liked=False).count()
 
     @staticmethod
     def has_user_liked(publication, user):

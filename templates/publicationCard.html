@@ -1,45 +1,50 @@
-<div class="card letter-container p-2 border border-dark-subtle border-5 w-75">
+<div class="letter-container rounded p-4 shadow w-50">
 
     <div class="card-body">
         <div>
-            <h5 class="card-title">{{ publication.title }}</h5>
-            <h6 class="card-subtitle mb-2 text-body-secondary">{{ publication.publisher.username }}</h6>
+            <h5 class="card-title secondary-color">{{ publication.title }}</h5>
+            <h6 class="card-subtitle mb-2 primary-color">{{ publication.publisher.username }}</h6>
         </div>
         <hr>
 
         <div class="letter">
-            <p class="card-text text-white">{{ publication.body }}</p>
+            <p>{{ publication.body }}</p>
         </div>
         <div>
-            <p class="card-text text-muted">{{ publication.number_likes }} likes</p>
+            <p id="likesCount_{{ publication.id }}" class="card-text primary-color">{{ publication.number_likes }} likes</p>
         </div>
         <hr>
 
         <div>
             {% csrf_token %}
            <div class="d-flex justify-content-between">
-            <button class="btn btn-outline-primary mx-2 {% if publication.has_user_liked %}active{% endif %}"
+            <button class="btn custom-btn-card mx-2 {% if publication.has_user_liked %}active{% endif %}"
                     onclick="toggle(this)" data-id="{{ publication.id }}">
-                <i class="fas fa-thumbs-up"></i>
+                <i class="fas fa-heart"></i>
             </button>
 
             {% if publication.publisher.id == user.id %}
-            <div class="d-flex justify-content-end">
-                <button class="btn btn-outline-warning mx-2" data-bs-toggle="modal" data-bs-target="#publicationModal"
-                        data-title="{{publication.title}}" data-message="{{publication.body}}">
-                    <i class="fas fa-edit"></i>
+            <div class="dropdown">
+                <button class="btn custom-btn-card" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class ="fas fa-ellipsis-h"></i>
                 </button>
-                <div>
-                    {% include 'publicationModal.html' with publication=publication %}
-                </div>
-
-                <button class="btn btn-outline-danger mx-2" onclick="deletePublication(this)" data-id="{{ publication.id }}">
-                    <i class="fas fa-trash-alt"></i>
-                </button>
-
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li>
+                        <button class="dropdown-item btn btn-light secondary-color" data-bs-toggle="modal" data-bs-target="#publicationModal"
+                    data-id="{{publication.id}}" data-title="{{publication.title}}" data-message="{{publication.body}}">
+                        <i class="fas fa-edit"></i> Edit
+                        </button>
+                    </li>
+                    <li>
+                        <button class="dropdown-item btn btn-light text-danger" onclick="deletePublication(this)" data-id="{{ publication.id }}">
+                            <i class="fas fa-trash-alt"></i> Delete
+                        </button>
+                    </li>
+                </ul>
+                {% include 'publicationModal.html' with publication=publication %}
             </div>
             {% endif %}
-            </div>
+           </div>
         </div>
 
     </div>
@@ -47,6 +52,7 @@
 </div>
 
 <script>
+
     function deletePublication(element) {
         const publicationId = element.getAttribute('data-id');
         const url = `/delete/${publicationId}/`;
@@ -79,7 +85,7 @@
             .then(() => {
 
                 element.classList.toggle('active');
-                const likesCountElement = element.closest('.card-body').querySelector('.card-text.text-muted');
+                const likesCountElement = document.getElementById(`likesCount_${publicationId}`);
                 let likesCount = parseInt(likesCountElement.textContent);
                 if (element.classList.contains('active')) {
                     likesCount++;

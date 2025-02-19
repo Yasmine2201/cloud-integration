@@ -34,8 +34,6 @@ urlpatterns = [
     path('delete/<int:publication_id>/', publication.views.delete_publication, name='delete'),
     path('edit/<int:publication_id>/', publication.views.edit_publication, name='edit'),
     path('profile/', authentication.views.profile_page, name='profile'),
-
-    # path('write_letter/', love.views.write_letter, name='write_letter'),
-    # path('edit_letter/<int:letter_id>/', love.views.edit_letter, name='edit_letter'),
+    path('edit-profile/', authentication.views.edit_profile, name='edit_profile'),
 
 ]
