@@ -48,17 +48,3 @@ def logout_user(request):
 
     logout(request)
     return redirect('welcome')
-
-def profile_page(request):
-    publications = PublicationService.get_my_publications(request.user)
-    for publication in publications:
-        publication.number_likes = PublicationService.get_likes(publication)
-        publication.has_user_liked = PublicationService.has_user_liked(publication, request.user)
-
-    return render(request, 'authentication/profile.html', {"all_publications": publications, "user": request.user})
-
-def edit_profile(request):
-    if request.method == 'POST':
-        request.user.username = json.loads(request.body).get('username')
-        request.user.save()
-    return redirect('profile')

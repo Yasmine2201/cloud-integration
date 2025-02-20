@@ -20,6 +20,7 @@ from django.contrib import admin
 
 import authentication.views
 import publication.views
+import userprofile.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,7 +34,7 @@ urlpatterns = [
     path('dislike/<int:publication_id>/', publication.views.dislike_publication, name='dislike'),
     path('delete/<int:publication_id>/', publication.views.delete_publication, name='delete'),
     path('edit/<int:publication_id>/', publication.views.edit_publication, name='edit'),
-    path('profile/', authentication.views.profile_page, name='profile'),
-    path('edit-profile/', authentication.views.edit_profile, name='edit_profile'),
+    path('profile/', userprofile.views.profile_page, name='profile'),
+    path('edit-profile/', userprofile.views.edit_profile, name='edit_profile'),
 
 ]
