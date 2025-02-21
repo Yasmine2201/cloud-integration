@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: django-app
-          image: yasmineaz/cloudintegration:v15
+          image: yasmineaz/cloudintegration:v19
           ports:
             - containerPort: 8000
           envFrom:
@@ -47,5 +47,9 @@ spec:
                 secretKeyRef:
                   name: postgres-secret
                   key: POSTGRES_PORT
+          lifecycle:
+            postStart:
+              exec:
+                command: [ "python", "manage.py", "migrate" ]
 
 
