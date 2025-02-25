@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 
 from publication.services import PublicationService
 
+
 @login_required
 def profile_page(request):
     publications = PublicationService.get_my_publications(request.user)

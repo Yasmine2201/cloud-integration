@@ -1,18 +1,11 @@
-import json
 from django.contrib.auth import authenticate, logout, login
 from django.shortcuts import render, redirect
 
 from authentication.forms import RegistrationForm, LoginForm
-from publication.services import PublicationService
+
 
 
 # Create your views here.
-def welcome_page(request):
-    if request.user.is_authenticated:
-        return redirect('home')
-    publications = PublicationService.get_all_publications()
-    return render(request, 'welcome.html', {"all_publications": publications})
-
 def registration_page(request):
     if request.user.is_authenticated:
         return redirect('home')

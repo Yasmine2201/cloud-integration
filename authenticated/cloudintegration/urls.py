@@ -24,10 +24,9 @@ import userprofile.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',authentication.views.welcome_page, name='welcome'),
-    path('login',authentication.views.login_page, name='login'),
-    path('logout/',authentication.views.logout_user, name='logout'),
-    path('register/',authentication.views.registration_page, name='register'),
+    path('login', authentication.views.login_page, name='login'),
+    path('logout/', authentication.views.logout_user, name='logout'),
+    path('register/', authentication.views.registration_page, name='register'),
     path('home/', publication.views.home_page, name='home'),
     path('create/', publication.views.create_publication, name='create'),
     path('like/<int:publication_id>/', publication.views.like_publication, name='like'),
