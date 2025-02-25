@@ -14,9 +14,9 @@ spec:
     spec:
       containers:
         - name: django-app
-          image: yasmineaz/cloudintegration:v19
+          image: yasmineaz/cloudintegration:v20
           ports:
-            - containerPort: 8000
+            - containerPort: 8000 
           envFrom:
             - secretRef:
                 name: postgres-secret
@@ -52,4 +52,17 @@ spec:
               exec:
                 command: [ "python", "manage.py", "migrate" ]
 
+---
 
+apiVersion: v1
+kind: Service
+metadata:
+  name: django-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: django-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000

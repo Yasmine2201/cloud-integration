@@ -1,0 +1,60 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: yaslog-gateway
+spec:
+  selector:
+    istio: yaslog-gateway
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: nonauthenticated-virtsrv
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - yaslog-gateway
+  http:
+    - match:
+        - uri:
+            prefix: /
+      rewrite:
+        uri: /
+      route:
+        - destination:
+            port:
+              number: 80
+            host: nonauthenticated-srv.default.svc.cluster.local
+
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: django-virtsrv
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - yaslog-gateway
+  http:
+    - match:
+        - uri:
+            prefix: /appù
+      rewrite:
+        uri: /
+      route:
+        - destination:
+            port:
+              number: 80
+            host: django-service.default.svc.cluster.local
