@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: django-app
-          image: yasmineaz/cloudintegration:v19
+          image: yasmineaz/cloudintegration:v22
           ports:
             - containerPort: 8000 
           envFrom:
