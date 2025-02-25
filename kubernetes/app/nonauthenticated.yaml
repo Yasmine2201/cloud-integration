@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: nonauthenticated-app
-          image: yasmineaz/nonauthenticated:latest
+          image: yasmineaz/cloudintegration:v21
           ports:
             - containerPort: 8001
 
@@ -31,4 +31,4 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 8000
+      targetPort: 8001

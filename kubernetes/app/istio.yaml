@@ -4,7 +4,7 @@ metadata:
   name: yaslog-gateway
 spec:
   selector:
-    istio: yaslog-gateway
+    istio: ingressgateway
   servers:
     - port:
         number: 80
@@ -50,7 +50,7 @@ spec:
   http:
     - match:
         - uri:
-            prefix: /appù
+            prefix: /app
       rewrite:
         uri: /
       route:
