@@ -1,0 +1,60 @@
+###
+POST http://localhost:8000/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "yasmine@ex.com",
+  "password": "123456"
+}
+###
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+
+{
+   "email": "yasmine@ex.com",
+    "password": "123456"
+}
+
+### Publication GET ###
+GET http://localhost:8001/api/publications
+Content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQwODc2NTcxLCJpYXQiOjE3NDA4NzQ3NzEsImp0aSI6IjVjMmJlOWNiYWNmZjRkOWQ5YTk1NTBkZTNkNjNjZGUzIiwidXNlcl9pZCI6OX0.d3CMvRs9R_x2l1QDT5Hvapwdrn1D1MXui8fGT8vJGHk
+
+### Publiation POST ###
+POST http://localhost:8001/api/publications
+Content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQwODc2NTcxLCJpYXQiOjE3NDA4NzQ3NzEsImp0aSI6IjVjMmJlOWNiYWNmZjRkOWQ5YTk1NTBkZTNkNjNjZGUzIiwidXNlcl9pZCI6OX0.d3CMvRs9R_x2l1QDT5Hvapwdrn1D1MXui8fGT8vJGHk
+
+{
+  "title": "Test",
+  "body": "Test"
+}
+### Publication PUT ###
+PUT http://localhost:8001/api/publications/1
+Content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQwODc2NTcxLCJpYXQiOjE3NDA4NzQ3NzEsImp0aSI6IjVjMmJlOWNiYWNmZjRkOWQ5YTk1NTBkZTNkNjNjZGUzIiwidXNlcl9pZCI6OX0.d3CMvRs9R_x2l1QDT5Hvapwdrn1D1MXui8fGT8vJGHk
+
+{
+  "title": "Test1",
+  "body": "Test1"
+}
+### Like POST ###
+POST http://localhost:8001/api/publications/1/like
+Content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQwODc2NTcxLCJpYXQiOjE3NDA4NzQ3NzEsImp0aSI6IjVjMmJlOWNiYWNmZjRkOWQ5YTk1NTBkZTNkNjNjZGUzIiwidXNlcl9pZCI6OX0.d3CMvRs9R_x2l1QDT5Hvapwdrn1D1MXui8fGT8vJGHk
+### Like DELETE ###
+DELETE http://localhost:8001/api/publications/1/like
+Content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQwODc2NTcxLCJpYXQiOjE3NDA4NzQ3NzEsImp0aSI6IjVjMmJlOWNiYWNmZjRkOWQ5YTk1NTBkZTNkNjNjZGUzIiwidXNlcl9pZCI6OX0.d3CMvRs9R_x2l1QDT5Hvapwdrn1D1MXui8fGT8vJGHk
+### UserProfile GET ###
+GET http://localhost:8002/api/profile
+Content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQwODc4ODY5LCJpYXQiOjE3NDA4NzcwNjksImp0aSI6IjQ0MmUxOWNlOTE4ZjQ4NTBiMjU5ZThjMGI4ZGZkNzhiIiwidXNlcl9pZCI6OX0.YDrSPFW7sqFHRO3rYr43t6kJy7UD41jkcUv5MOJHI9Y
+### UserProfile PUT ###
+PUT http://localhost:8002/api/profile
+Content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQwODc4ODY5LCJpYXQiOjE3NDA4NzcwNjksImp0aSI6IjQ0MmUxOWNlOTE4ZjQ4NTBiMjU5ZThjMGI4ZGZkNzhiIiwidXNlcl9pZCI6OX0.YDrSPFW7sqFHRO3rYr43t6kJy7UD41jkcUv5MOJHI9Y
+
+{
+  "username": "newusername"
+}
