@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nonauthenticated-app
+  name: landing-app
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: nonauthenticated-app
+      app: landing-app
   template:
     metadata:
       labels:
-        app: nonauthenticated-app
+        app: landing-app
     spec:
       containers:
-        - name: nonauthenticated-app
-          image: yasmineaz/cloudintegration:v21
+        - name: landing-app
+          image: registry.infra.kagescan.fr/s9-cloud-landing:latest
           ports:
             - containerPort: 8001
 
@@ -23,11 +23,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: nonauthenticated-srv
+  name: landing-srv
 spec:
   type: LoadBalancer
   selector:
-    app: nonauthenticated-app
+    app: landing-app
   ports:
     - protocol: TCP
       port: 80
