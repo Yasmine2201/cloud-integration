@@ -1,0 +1,45 @@
+services:
+  auth:
+    image: registry.infra.kagescan.fr/s9-cloud-auth
+    build:
+      target: deployjoy_api_auth
+    ports:  
+      - 8000:8000
+    volumes:
+    - shared-dev-db:/db.sqlite3
+    depends_on:
+      - migrations
+
+  publication:
+    image: registry.infra.kagescan.fr/s9-cloud-publication
+    build:
+      target: deployjoy_api_publication
+    ports:
+      - 8001:8001
+    volumes:
+    - shared-dev-db:/db.sqlite3
+    depends_on:
+      - migrations
+
+  profile:
+    image: registry.infra.kagescan.fr/s9-cloud-profile
+    build:
+      target: deployjoy_api_profile
+    ports:
+      - 8002:8002
+    volumes:
+    - shared-dev-db:/db.sqlite3
+    depends_on:
+      - migrations
+
+  migrations:
+    image: registry.infra.kagescan.fr/s9-cloud-migrator
+    build:
+      target: deployjoy_api_migrator
+    volumes:
+    - shared-dev-db:/db.sqlite3
+
+
+volumes:
+  shared-dev-db:
+    driver: local
