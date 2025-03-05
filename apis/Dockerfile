@@ -49,5 +49,10 @@ FROM deployjoy_api_base_dev AS deployjoy_api_profile
     CMD ["sh", "-c", "python manage.py migrate \
         && python manage.py runserver 0.0.0.0:8002 \
     "]
-
     
+# docker build --target deployjoy_logan -t registry.infra.kagescan.fr/s9-cloud-logan .
+# docker run -p 8000:8000 -p 8001:8001 -p 8002:8002 -p 8003:8003 -p 8004:8004 -it registry.infra.kagescan.fr/s9-cloud-logan
+FROM deployjoy_api_base_dev AS deployjoy_logan
+    ADD . .
+    EXPOSE 8000 8001 8002 8003 8004
+    CMD ["./uglydev.sh"]

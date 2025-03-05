@@ -1,3 +1,5 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQxMTk4NzgxLCJpYXQiOjE3NDExOTY5ODEsImp0aSI6IjNjYWU4N2E1NjQ0MjRlMWI4MDIyZjI1ZTc4ZDRjYzY1IiwidXNlcl9pZCI6MX0.IR3XoU1YeEslpuM55jCV4gfw4a1WUukSQ57rrUXYNB4
+
 ###
 POST http://localhost:8000/api/auth/register
 Content-Type: application/json
@@ -18,12 +20,12 @@ Content-Type: application/json
 ### Publication GET ###
 GET http://localhost:8001/api/publications
 Content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQxMDI3MDc0LCJpYXQiOjE3NDEwMjUyNzQsImp0aSI6ImZlNmI1NTIzNzEyOTRmNGE4ZWQyOThiYmFhZmUxN2UwIiwidXNlcl9pZCI6MX0.BnBJEz8TT0KvxT2ElbgW-SzGKDyPYIEKw8lfgED7nrU
+Authorization: Bearer {{token}}
 
 ### Publiation POST ###
 POST http://localhost:8001/api/publications
 Content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQwODc2NTcxLCJpYXQiOjE3NDA4NzQ3NzEsImp0aSI6IjVjMmJlOWNiYWNmZjRkOWQ5YTk1NTBkZTNkNjNjZGUzIiwidXNlcl9pZCI6OX0.d3CMvRs9R_x2l1QDT5Hvapwdrn1D1MXui8fGT8vJGHk
+Authorization: Bearer {{token}}
 
 {
   "title": "Test",
@@ -32,7 +34,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 ### Publication PUT ###
 PUT http://localhost:8001/api/publications/1
 Content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQwODc2NTcxLCJpYXQiOjE3NDA4NzQ3NzEsImp0aSI6IjVjMmJlOWNiYWNmZjRkOWQ5YTk1NTBkZTNkNjNjZGUzIiwidXNlcl9pZCI6OX0.d3CMvRs9R_x2l1QDT5Hvapwdrn1D1MXui8fGT8vJGHk
+Authorization: Bearer {{token}}
 
 {
   "title": "Test1",
@@ -41,19 +43,19 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 ### Like POST ###
 POST http://localhost:8001/api/publications/1/like
 Content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQwODc2NTcxLCJpYXQiOjE3NDA4NzQ3NzEsImp0aSI6IjVjMmJlOWNiYWNmZjRkOWQ5YTk1NTBkZTNkNjNjZGUzIiwidXNlcl9pZCI6OX0.d3CMvRs9R_x2l1QDT5Hvapwdrn1D1MXui8fGT8vJGHk
+Authorization: Bearer {{token}}
 ### Like DELETE ###
 DELETE http://localhost:8001/api/publications/1/like
 Content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQwODc2NTcxLCJpYXQiOjE3NDA4NzQ3NzEsImp0aSI6IjVjMmJlOWNiYWNmZjRkOWQ5YTk1NTBkZTNkNjNjZGUzIiwidXNlcl9pZCI6OX0.d3CMvRs9R_x2l1QDT5Hvapwdrn1D1MXui8fGT8vJGHk
+Authorization: Bearer {{token}}
 ### UserProfile GET ###
 GET http://localhost:8002/api/profile
 Content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQwODc4ODY5LCJpYXQiOjE3NDA4NzcwNjksImp0aSI6IjQ0MmUxOWNlOTE4ZjQ4NTBiMjU5ZThjMGI4ZGZkNzhiIiwidXNlcl9pZCI6OX0.YDrSPFW7sqFHRO3rYr43t6kJy7UD41jkcUv5MOJHI9Y
+Authorization: Bearer {{token}}
 ### UserProfile PUT ###
 PUT http://localhost:8002/api/profile
 Content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQwODc4ODY5LCJpYXQiOjE3NDA4NzcwNjksImp0aSI6IjQ0MmUxOWNlOTE4ZjQ4NTBiMjU5ZThjMGI4ZGZkNzhiIiwidXNlcl9pZCI6OX0.YDrSPFW7sqFHRO3rYr43t6kJy7UD41jkcUv5MOJHI9Y
+Authorization: Bearer {{token}}
 
 {
   "username": "newusername"
