@@ -1,17 +1,19 @@
 <template>
   <UCard>
     <UInput
-      v-model="postTitle"
+      v-model="props.publication.title"
       input-class="text-xl font-semibold"
       color="primary"
       variant="none"
       disabled
     />
     <UTextarea
-      v-model="postBody"
+      v-model="props.publication.body"
       color="primary"
       variant="none"
+      :rows="1"
       autoresize
+      disabled
     />
     <div class="flex justify-end">
           
@@ -19,7 +21,10 @@
   </UCard>
 </template>
 <script setup lang="ts">
-const postTitle = ref<string>("J'aime les chats roux");
-const postBody = ref<string>("Whoa");
+import type { Publication } from '~/store/publications';
+
+const props = defineProps<{
+  publication: Publication,
+}>();
 </script>
 <style></style>

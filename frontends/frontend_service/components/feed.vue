@@ -1,6 +1,12 @@
 <template>
     <CreatePost/>
-    <pre>{{ loadedPubs}}</pre>
+    <div class="flex flex-col gap-4 mb-8">
+        <FeedPost
+            v-for="publication in store.publications"
+            :key="publication.id"
+            :publication="publication"
+        />
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -10,10 +16,7 @@ const store = usePublicationsStore();
 
 onMounted(async () => {
     await store.loadData();
-});
-
-const loadedPubs = computed(() => {
-    return store.publications ? JSON.stringify(store.publications, null, 2) : store.publications
+    console.log(JSON.stringify(store.publications, null, 2));
 });
 </script>
 
