@@ -6,7 +6,7 @@ definePageMeta({
 </script>
 
 <template>
-  <Feed/>
+
 </template>
 
 <style scoped>
