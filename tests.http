@@ -1,14 +1,11 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQxMjYwMDE1LCJpYXQiOjE3NDEyNTgyMTUsImp0aSI6IjA1NzQ2YzMzZTVlYzQ4YWVhOTA3OWJiYThhN2M2MTI0IiwidXNlcl9pZCI6MX0.wfXZ7mLx6U44Ixf91yhN_VzuLds55vNeTF3Y6ZpQuOI
-
-#@api_auth_port = 8000
-@api_auth_port = 42635
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQxMjU5OTA3LCJpYXQiOjE3NDEyNTgxMDcsImp0aSI6IjZhMTU5NWMwMjMzMDQ4ZTM4YjkxZjhhMWIyZjFkZmE5IiwidXNlcl9pZCI6Mn0.pS5qXWZN-mQwiEg_jsB7bwODvlppaZFaxR_Iq_fUl0o
 
 ###
 POST http://localhost:{{api_auth_port}}/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "yasmine@ex.com",
+  "email": "test@test.fr",
   "password": "get ouais"
 }
 ###
@@ -16,7 +13,7 @@ POST http://localhost:{{api_auth_port}}/api/auth/login
 Content-Type: application/json
 
 {
-   "email": "yasmine@ex.com",
+   "email": "test@test.fr",
     "password": "get ouais"
 }
 

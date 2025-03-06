@@ -12,7 +12,6 @@ const TWO_MIN = 2 * 60 * 1000;
 export const useAuthStore = defineStore('auth', {
     state: () => {
         const isAuthenticated = isStoredTokenValid();
-        console.log("LOGAN is auth", isAuthenticated);
         return {
             isAuthenticated: isAuthenticated,
             user: null as User | null,
