@@ -27,20 +27,20 @@ spec:
   http:
     - match:
         - uri:
-            prefix: "/api/auth"
+            prefix: "/api/publication"
 
       route:
         - destination:
             port:
               number: 80
-            host: publication-service.default.svc.cluster.local
+            host: publication-service.joy.svc.cluster.local
 
 ---
 
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: django-virtsrv
+  name: auth-virtsrv
 spec:
   hosts:
     - "*"
@@ -54,4 +54,4 @@ spec:
         - destination:
             port:
               number: 80
-            host: auth-service.default.svc.cluster.local
+            host: auth-service.joy.svc.cluster.local
