@@ -1,18 +1,19 @@
 <template>
+    <CreatePost/>
     <pre>{{ loadedPubs}}</pre>
 </template>
 
 <script setup lang="ts">
 import { usePublicationsStore } from '~/store/publications';
 
-const {loadData, publications} = usePublicationsStore();
+const store = usePublicationsStore();
 
 onMounted(async () => {
-    await loadData();
+    await store.loadData();
 });
 
 const loadedPubs = computed(() => {
-    return publications ? JSON.stringify(publications, null, 2) : publications
+    return store.publications ? JSON.stringify(store.publications, null, 2) : store.publications
 });
 </script>
 

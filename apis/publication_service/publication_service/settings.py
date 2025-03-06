@@ -123,7 +123,13 @@ if os.getenv('POSTGRES_NAME'):
             'PORT': os.getenv('POSTGRES_PORT'),
         }
     }
-
+elif os.getenv('USE_SQLITE'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 else:
     raise Exception("Les variables d'environnement pour PostgreSQL ne sont pas définies !")
 

@@ -12,4 +12,5 @@ python manage.py runserver 0.0.0.0:8001 &
 cd ../profile_service/
 python manage.py runserver 0.0.0.0:8002 &
 
+cd ..
 bash

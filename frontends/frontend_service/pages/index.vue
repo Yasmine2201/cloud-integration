@@ -6,7 +6,7 @@ definePageMeta({
 </script>
 
 <template>
-  <Feed/>
+  <p>Landing page</p>
 </template>
 
 <style scoped>

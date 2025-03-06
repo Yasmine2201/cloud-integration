@@ -28,15 +28,27 @@ export const usePublicationsStore = defineStore('publications', {
         },
         async loadData() {
             try {
-                const response: any = await useFetch(`${publicationsAPI}/`, {
+                const response: any = await useFetch(`${publicationsAPI}`, {
                     method: 'get',
                     headers: {'Content-Type': 'application/json', 'Authorization': this.getAuth()}
                 });
                 const data = response.data.value;
-                if (data) {
-                    console.log("logan", {data});
+                if (Array.isArray(data)) {
+                    this.publications = data;
                 }
                 this.loaded = true;
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async createPublication(publication: {title: string, body: string}) {
+            try {
+                await useFetch(`${publicationsAPI}`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json', 'Authorization': this.getAuth()},
+                    body: publication
+                });
+                await this.loadData();
             } catch (error) {
                 console.error(error);
             }

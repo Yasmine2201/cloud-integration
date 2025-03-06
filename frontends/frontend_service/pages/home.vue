@@ -6,7 +6,9 @@ definePageMeta({
 </script>
 
 <template>
-  <Feed/>
+  <div class="max-w-xl pt-10 mx-auto">
+    <Feed/>
+  </div>
 </template>
 
 <style scoped>

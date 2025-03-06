@@ -27,10 +27,10 @@ async function logout() {
 </script>
 
 <template>
-  <div class="main-container gap-10">
+  <div id="layoutDefault" class="flex flex-col">
     <UHorizontalNavigation :links="navLinks" class="shadow p-2"/>
 
-    <div id="content" class="main-container d-flex flex-column align-items-center">
+    <div id="content" class="main-container d-flex flex-column align-items-center use-bg-feed flex-grow">
       <slot/>
     </div>
   </div>
@@ -39,4 +39,18 @@ async function logout() {
 
 <style>
 
+html, body, #__nuxt, #__nuxt>div, #layoutDefault {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.use-bg-feed {
+  background-image: url("~/assets/background-feed.svg");
+}
+.use-bg-feed {
+  background-size: cover;
+  background-position: center;
+}
 </style>
