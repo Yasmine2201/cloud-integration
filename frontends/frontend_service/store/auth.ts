@@ -66,7 +66,7 @@ function isStoredTokenValid() {
     }
     const expiresAt = tokenData.exp * 1000;
     const now = Date.now();
-    return now + TWO_MIN > expiresAt;
+    return now + TWO_MIN < expiresAt;
 }
 
 function decodePayload(jwt?: string) {
