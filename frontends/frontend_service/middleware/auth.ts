@@ -3,14 +3,14 @@ import {useAuthStore} from "~/store/auth";
 
 export default defineNuxtRouteMiddleware((to, from) => {
     const authStore = useAuthStore();
-    if (!authStore.isAuthenticated && to.path !== '/login') {
-        return navigateTo('/login');
+
+    const isAuthenticated = authStore.isAuthenticated;
+    const isInLoginPage = to.path.startsWith("/auth/");
+
+    if (!isAuthenticated && !isInLoginPage) {
+        return navigateTo('/auth/login');
     }
-    const token = useCookie('token');
-    if (token.value && from?.name === 'login') {
+    if (isAuthenticated && isInLoginPage) {
         return navigateTo('/home');
     }
-
-
-
 })

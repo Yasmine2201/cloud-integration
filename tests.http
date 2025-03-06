@@ -6,7 +6,7 @@ Content-Type: application/json
 
 {
   "email": "yasmine@ex.com",
-  "password": "123456"
+  "password": "get ouais"
 }
 ###
 POST http://localhost:8000/api/auth/login
@@ -14,7 +14,7 @@ Content-Type: application/json
 
 {
    "email": "yasmine@ex.com",
-    "password": "123456"
+    "password": "get ouais"
 }
 
 ### Publication GET ###

@@ -54,7 +54,7 @@ class LoginView(APIView):
                     },
                     'token':{
                         'refresh': str(refresh),
-                        'access': str(refresh.access_token)
+                        'access': str(refresh.access_token),
                     }
                 }, status=status.HTTP_200_OK)
             else :

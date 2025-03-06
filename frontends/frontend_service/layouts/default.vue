@@ -2,12 +2,9 @@
 import {useAuthStore} from '~/store/auth';
 
 const router = useRouter();
-
 const {logoutUser} = useAuthStore();
 const {isAuthenticated} = useAuthStore();
 
-
-console.log(isAuthenticated);
 
 const navLinks = computed(() => {
   if (isAuthenticated ) {
@@ -18,8 +15,8 @@ const navLinks = computed(() => {
     ];
   } else {
     return [
-      {label: "Login", icon: "i-heroicons-arrow-right-on-rectangle", to: "/login"},
-      {label: "Register", icon: "i-heroicons-user-plus", to: "/register"}
+      {label: "Login", icon: "i-heroicons-arrow-right-on-rectangle", to: "/auth/login"},
+      {label: "Register", icon: "i-heroicons-user-plus", to: "/auth/register"}
     ];
   }
 });
