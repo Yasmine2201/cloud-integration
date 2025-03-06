@@ -19,14 +19,14 @@ CMD ["python","manage.py","runserver", "0.0.0.0:8000"]
 # docker build --target deployjoy_api_publication -t registry.infra.kagescan.fr/s9-cloud-publication .
 # docker run -p 8002:8002 -it registry.infra.kagescan.fr/s9-cloud-publication
 FROM deployjoy_api_base_dev AS deployjoy_api_publication
-ADD publication_service/* .
+ADD publication_service .
 EXPOSE 8001
 CMD ["python","manage.py","runserver", "0.0.0.0:8001"]
 
 # docker build --target deployjoy_api_profile -t registry.infra.kagescan.fr/s9-cloud-profile .
 # docker run -p 8002:8002 -it registry.infra.kagescan.fr/s9-cloud-profile
 FROM deployjoy_api_base_dev AS deployjoy_api_profile
-ADD profile_service/* .
+ADD profile_service .
 EXPOSE 8002
 CMD ["python","manage.py","runserver", "8002"]
 

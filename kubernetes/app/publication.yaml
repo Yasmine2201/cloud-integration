@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api-auth
+  name: api-publication
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: api-auth
+      app: api-publication
   template:
     metadata:
       labels:
-        app: api-auth
+        app: api-publication
     spec:
       containers:
-        - name: api-auth
-          image: registry.infra.kagescan.fr/s9-cloud-auth-yasmine:latest
+        - name: api-publication
+          image: registry.infra.kagescan.fr/s9-cloud-publication-yasmine:latest
           ports:
-            - containerPort: 8000
+            - containerPort: 8001
           envFrom:
             - secretRef:
                 name: postgres-secret
@@ -58,12 +58,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-service
+  name: publication-service
 spec:
   type: LoadBalancer
   selector:
-    app: api-auth
+    app: api-publication
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 8000
+      targetPort: 8001
