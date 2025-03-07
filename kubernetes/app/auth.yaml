@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: api-auth
-          image: registry.infra.kagescan.fr/s9-cloud-auth-yasmine:latest
+          image: registry.infra.kagescan.fr/s9-cloud-auth:v0.2
           ports:
             - containerPort: 8000
           envFrom:
