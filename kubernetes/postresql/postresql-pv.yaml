@@ -7,9 +7,9 @@ metadata:
     type: local
     app: postgres
 spec:
-  storageClassName: manual
+  storageClassName: ""
   capacity:
-    storage: 10Gi
+    storage: 100Mi
   accessModes:
     - ReadWriteMany
   hostPath:

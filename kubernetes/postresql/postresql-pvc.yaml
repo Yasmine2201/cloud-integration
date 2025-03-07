@@ -6,10 +6,9 @@ metadata:
   labels:
     app: postgres
 spec:
-  storageClassName: manual
   accessModes:
     - ReadWriteMany
   resources:
     requests:
-      storage: 10Gi
+      storage: 100Mi
   

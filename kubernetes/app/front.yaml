@@ -24,6 +24,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: joy
   name: landing-srv
 spec:
   type: LoadBalancer
