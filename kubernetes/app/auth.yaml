@@ -1,6 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: joy
   name: api-auth
 spec:
   replicas: 2

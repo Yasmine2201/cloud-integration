@@ -1,6 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
+  namespace: joy
   name: postgres-volume
   labels:
     type: local
