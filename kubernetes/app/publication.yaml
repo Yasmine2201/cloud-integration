@@ -51,7 +51,7 @@ spec:
           lifecycle:
             postStart:
               exec:
-                command: [ "sh", "-c", "python manage.py makemigrations core_models && python manage.py migrate core_models" ]
+                command: [ "sh", "-c", "python manage.py makemigrations publication && python manage.py migrate publication" ]
 
 
 ---
