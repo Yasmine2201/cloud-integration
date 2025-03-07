@@ -3,24 +3,23 @@
 Nous avons mis en place un registry public temporaire : `registry.infra.kagescan.fr`.
 
 ```sh
-cd landing
-docker build -t registry.infra.kagescan.fr/s9-cloud-landing .*
-docker push registry.infra.kagescan.fr/s9-cloud-landing
-cd ..
-```
-
-
-```sh
-# Déploiement sur minikube
+# Reset minikube
 minikube delete
 minikube start
-./istioctl install --set profile=demo -y
-kubectl create namespace joy
-kubectl apply -f postresql/ -n joy
-# Bien attendre pour chaque déploiement que tout est bien démarré
-kubectl apply -f app/auth.yaml -n joy
-kubectl apply -f app/publication.yaml -n joy
-kubectl apply -f app/profile.yaml -n joy
-kubectl apply -f app/istio.yaml -n joy
+
+# (ré-)Installer istio (adapter selon votre machine)
+~/istio/bin/istioctl install --set profile=demo -y
+
+# Cloner ce repo : 
+git clone https://github.com/Yasmine2201/cloud-integration.git
+
+# Lancement de la bdd
+kubectl apply -f kubernetes/namespace.yml
+kubectl apply -f kubernetes/postresql/
+
+# (Bien attendre postgres avant de démarrer app)
+kubectl apply -f kubernetes/app/
+
+# Lancer le tunnel vers ingress.
 minikube service istio-ingressgateway -n istio-system
 ```
