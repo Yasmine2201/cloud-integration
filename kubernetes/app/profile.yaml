@@ -2,26 +2,65 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: joy
-  name: title
-  labels:
-    app: title
+  name: api-profile
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
-      app: title
+      app: api-profile
   template:
     metadata:
-      name: title
       labels:
-        app: title
+        app: api-profile
     spec:
       containers:
-        - name: title
-          image: nginx
-          imagePullPolicy: IfNotPresent
+        - name: api-auth
+          image: registry.infra.kagescan.fr/s9-cloud-profile:v0.1
           ports:
-            - containerPort: 80
-              protocol: TCP
-      restartPolicy: Always
-      
+            - containerPort: 8002
+          envFrom:
+            - secretRef:
+                name: postgres-secret
+          env:
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_NAME
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_HOST
+
+            - name: DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PORT
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: joy
+  name: profile-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: api-profile
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8002
