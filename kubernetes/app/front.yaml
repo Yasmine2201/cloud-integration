@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: nuxt-app
-          image: registry.infra.kagescan.fr/s9-cloud-nuxt:v0.4
+          image: registry.infra.kagescan.fr/s9-cloud-nuxt:v1.0
           ports:
             - containerPort: 8008
 
