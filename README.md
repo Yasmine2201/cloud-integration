@@ -14,11 +14,11 @@ minikube start
 git clone https://github.com/Yasmine2201/cloud-integration.git
 
 # Lancement de la bdd
-kubectl apply -f kubernetes/namespace.yml
-kubectl apply -f kubernetes/postresql/
+minikube kubectl -- apply -f kubernetes/namespace.yml
+minikube kubectl -- apply -f kubernetes/postresql/
 
 # (Bien attendre postgres avant de démarrer app)
-kubectl apply -f kubernetes/app/
+minikube kubectl -- apply -f kubernetes/app/
 
 # Lancer le tunnel vers ingress.
 minikube service istio-ingressgateway -n istio-system
