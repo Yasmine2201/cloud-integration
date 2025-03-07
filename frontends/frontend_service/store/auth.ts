@@ -1,12 +1,12 @@
 import {defineStore} from 'pinia';
 import type {User} from "~/types/user";
+import { apis } from './apis';
 
 export interface UserPayloadInterface {
     email: string;
     password: string;
 }
-
-const authAPI = 'http://localhost:8000/api/auth';
+  
 const TWO_MIN = 2 * 60 * 1000;
 
 export const useAuthStore = defineStore('auth', {
@@ -28,7 +28,7 @@ export const useAuthStore = defineStore('auth', {
         },
         async authenticateUser({email, password}: UserPayloadInterface) {
             try {
-                const response: any = await useFetch(`${authAPI}/login`, {
+                const response: any = await useFetch(`${apis.auth}/login`, {
                     method: 'post',
                     headers: {'Content-Type': 'application/json'},
                     body: {

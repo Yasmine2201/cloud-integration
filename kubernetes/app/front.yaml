@@ -2,22 +2,22 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: joy
-  name: landing-app
+  name: nuxt-app
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: landing-app
+      app: nuxt-app
   template:
     metadata:
       labels:
-        app: landing-app
+        app: nuxt-app
     spec:
       containers:
-        - name: landing-app
-          image: registry.infra.kagescan.fr/s9-cloud-landing:latest
+        - name: nuxt-app
+          image: registry.infra.kagescan.fr/s9-cloud-nuxt:v0.3
           ports:
-            - containerPort: 8001
+            - containerPort: 80
 
 ---
 
@@ -25,12 +25,12 @@ apiVersion: v1
 kind: Service
 metadata:
   namespace: joy
-  name: landing-srv
+  name: nuxt-service
 spec:
   type: LoadBalancer
   selector:
-    app: landing-app
+    app: nuxt-app
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 8001
+      targetPort: 80

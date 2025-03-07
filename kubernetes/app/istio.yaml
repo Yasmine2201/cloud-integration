@@ -81,3 +81,24 @@ spec:
               number: 80
             host: profile-service.joy.svc.cluster.local
 
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  namespace: joy
+  name: nuxt-virtsrv
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - yaslog-gateway
+  http:
+    - match:
+        - uri:
+            prefix: "/"
+      route:
+        - destination:
+            port:
+              number: 80
+            host: nuxt-service.joy.svc.cluster.local

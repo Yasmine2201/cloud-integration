@@ -1,4 +1,5 @@
 import {defineStore} from 'pinia';
+import { apis } from './apis';
 
 export type Publications = Publication[]
 
@@ -11,8 +12,6 @@ export interface Publication {
   created_at: string
   publisher: number
 }
-
-const publicationsAPI = 'http://localhost:8001/api/publications';
 
 export const usePublicationsStore = defineStore('publications', {
     state: () => {
@@ -28,7 +27,7 @@ export const usePublicationsStore = defineStore('publications', {
         },
         async loadData() {
             try {
-                const response: any = await useFetch(`${publicationsAPI}`, {
+                const response: any = await useFetch(`${apis.publication}`, {
                     method: 'get',
                     headers: {'Content-Type': 'application/json', 'Authorization': this.getAuth()}
                 });
@@ -43,7 +42,7 @@ export const usePublicationsStore = defineStore('publications', {
         },
         async createPublication(publication: {title: string, body: string}) {
             try {
-                await useFetch(`${publicationsAPI}`, {
+                await useFetch(`${apis.publication}`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json', 'Authorization': this.getAuth()},
                     body: publication
