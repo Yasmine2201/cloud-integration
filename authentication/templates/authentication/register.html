@@ -4,46 +4,123 @@
 <div class="mt-5 p-3 shadow rounded ">
     <div class="p-1 rounded text-center">
         <img src="https://static.vecteezy.com/system/resources/previews/015/815/200/original/kindness-icon-design-free-vector.jpg">
-        <h6 class="text-center primary-color">Register to feel better</h6>
+        <h6 class="text-center primary-color">Register</h6>
         <hr>
     </div>
-    <form method="post">
+    <form method="post" id="registerForm" novalidate>
         {% csrf_token %}
         <div class="mb-3">
-            <label class="form-label primary-color">Username</label>
-            {{ form.username }}
+            <label for="inputUsername" class="form-label primary-color">Username</label>
+            <input type="text" class="form-control" id="inputUsername" placeholder="John Doe">
+            <div class="invalid-feedback" style="font-size: 10px;">
+                Username must be at least 5 characters
+            </div>
         </div>
 
         <div class="mb-3">
-
-            <label class="form-label primary-color">Email</label>
-            {{ form.email }}
+            <label for="inputEmail" class="form-label primary-color">Email</label>
+            <input type="email" class="form-control" id="inputEmail" placeholder="john.doe@gmail.com">
+            <div class="invalid-feedback">
+                Please enter a valid email address
+            </div>
         </div>
-        <div class="mb-3 ">
 
-            <label class="form-label primary-color">Password</label>
-            {{ form.password1 }}
-
+        <div class="mb-3">
+            <label for="password" class="form-label primary-color">Password</label>
+            <input type="password" class="form-control" id="password">
+            <div class="invalid-feedback" style="font-size: 7px;">
+                Password must be at least 8 characters long, not all numbers or common words
+            </div>
         </div>
         <div class="mb-3">
-
-            <label class="form-label primary-color">Confirm Password</label>
-            {{ form.password2 }}
+            <label for="confirmPassword" class="form-label primary-color">Confirm Password</label>
+            <input type="password" class="form-control" id="confirmPassword">
+            <div class="invalid-feedback">
+                Passwords do not match
+            </div>
         </div>
-
         <hr>
 
         <button type="submit" class="btn custom-btn w-100">Submit</button>
-        <p class="text-center mt-2">You already have an account? <a class="primary-color" href="{% url 'login' %}">login</a></p>
+        <p class="text-center mt-2">You already have an account?
+            <a class="primary-color" href="{% url 'login' %}">login</a>
+        </p>
 
-        {% if form.non_field_errors %}
-        <div class="alert alert-danger mt-3">
-            {% for error in form.non_field_errors %}
-            <span class="d-block text-center">{{ error }}</span>
-            {% endfor %}
-        </div>
-        {% endif %}
     </form>
 </div>
+<script>
+    document.getElementById("registerForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        let usernameInput = document.getElementById("inputUsername");
+        let usernameValue = usernameInput.value.trim();
+        let usernamePattern = /^[a-zA-Z0-9_]{5,}$/;
+
+        let emailInput = document.getElementById("inputEmail");
+        let emailValue = emailInput.value.trim();
+        let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        let passwordInput = document.getElementById("password");
+        let passwordValue = passwordInput.value.trim();
+        let passwordPattern = /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d!@#$%^&*()_+]{8,}$/;
+
+        let confirmPasswordInput = document.getElementById("confirmPassword");
+        let confirmPasswordValue = confirmPasswordInput.value.trim();
+
+        if (!usernamePattern.test(usernameValue)) {
+            usernameInput.classList.add("is-invalid");
+        } else {
+            usernameInput.classList.remove("is-invalid");
+        }
+        if (!emailPattern.test(emailValue)) {
+            emailInput.classList.add("is-invalid");
+        } else {
+            emailInput.classList.remove("is-invalid");
+        }
+
+        if (!passwordPattern.test(passwordValue)) {
+            passwordInput.classList.add("is-invalid");
+        } else {
+            passwordInput.classList.remove("is-invalid");
+        }
+
+        if (passwordValue !== confirmPasswordValue) {
+            confirmPasswordInput.classList.add("is-invalid");
+        } else {
+            confirmPasswordInput.classList.remove("is-invalid");
+        }
+
+
+        if (emailPattern.test(emailValue) && usernamePattern.test(usernameValue) && passwordPattern.test(passwordValue) && passwordValue === confirmPasswordValue) {
+            fetch("{% url 'register' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: JSON.stringify({
+                    username: usernameValue,
+                    email: emailValue,
+                    password: passwordValue
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.errors) {
+                        if (data.errors.username) {
+                            usernameInput.classList.add("is-invalid");
+                            usernameInput.nextElementSibling.textContent = data.errors.username;
+                            }
+                        if (data.errors.email) {
+                        emailInput.classList.add("is-invalid");
+                        emailInput.nextElementSibling.textContent = data.errors.email;
+                        }
+                    }
+                    else if (data.redirection) window.location.href = data.redirection;
+
+                });
+        }
+    });
+</script>
 
 {% endblock content %}

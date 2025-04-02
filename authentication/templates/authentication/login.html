@@ -4,37 +4,72 @@
 <div class="mt-5 p-3 shadow rounded">
     <div class="p-1 rounded text-center">
         <img src="https://static.vecteezy.com/system/resources/previews/015/815/200/original/kindness-icon-design-free-vector.jpg">
-        <h6 class="text-center primary-color">Login to feel better</h6>
+        <h6 class="text-center primary-color">Login</h6>
     </div>
 
     <hr>
-    <form method="post">
+    <form method="post" id="loginForm" novalidate>
         {% csrf_token %}
+            <div class="mb-3">
+              <label for="inputUsername" class="form-label primary-color">Username</label>
+                <input type="text" class="form-control" id="inputUsername">
+                <div class="invalid-feedback">
+                     Invalid credentials
+                </div>
+            </div>
 
         <div class="mb-3">
-            <label class="form-label primary-color">Username</label>
-            {{ form.username }}
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label primary-color">Password</label>
-            {{ form.password }}
+            <label for= "password" class="form-label primary-color">Password</label>
+            <input type="password" class="form-control" id="password">
+            <div class="invalid-feedback">
+                    Invalid credentials
+                 </div>
         </div>
         <hr>
         <button type="submit" class="btn custom-btn w-100">Submit</button>
 
         <p class="text-center mt-3"> You don't have an account ? <a class="primary-color" href="{% url 'register' %}"> register</a></p>
 
-        {% if form.non_field_errors %}
-        <div class="alert alert-danger mt-3">
-            {% for error in form.non_field_errors %}
-            <span class="d-block text-center">{{ error }}</span>
-            {% endfor %}
-        </div>
-        {% endif %}
-
     </form>
 </div>
+<script>
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    let usernameInput = document.getElementById("inputUsername");
+    let usernameValue = usernameInput.value.trim();
+
+    let passwordInput = document.getElementById("password");
+    let passwordValue = passwordInput.value.trim();
+
+    fetch("{% url 'login' %}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+            body: JSON.stringify({
+                username: usernameValue,
+                password: passwordValue
+            })
+        })
+
+    .then(response => response.json())
+    .then(data => {
+        if (data.errors) {
+            usernameInput.classList.add("is-invalid");
+            passwordInput.classList.add("is-invalid");
+        }
+        else {
+            usernameInput.classList.remove("is-invalid");
+            passwordInput.classList.remove("is-invalid");
+            window.location.href = "{% url 'home' %}";
+        }
+
+    });
+
+});
+</script>
 
 
 {% endblock content %}

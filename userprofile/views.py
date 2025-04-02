@@ -1,8 +1,10 @@
 import json
 
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
+from authentication.models import CustomUser
 from publication.services import PublicationService
 
 @login_required
@@ -17,6 +19,12 @@ def profile_page(request):
 @login_required
 def edit_profile(request):
     if request.method == 'POST':
-        request.user.username = json.loads(request.body).get('username')
-        request.user.save()
-    return redirect('profile')
+        new_username = json.loads(request.body).get('username')
+        if request.user.username != new_username and CustomUser.objects.filter(username=new_username).exists():
+            return JsonResponse({"errors": "Username already taken"}, status=400)
+        else:
+            request.user.username = new_username
+            request.user.save()
+            return JsonResponse({"message": "Username updated successfully"}, status=200)
+
+    return JsonResponse({"errors": "invalid method"}, status=400)

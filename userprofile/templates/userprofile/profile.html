@@ -25,8 +25,11 @@
             <div class="modal-body">
                 <form id="editUsernameForm">
                     <div class="mb-2">
-                        <label for="newUsername" class="form-label primary-color">Username</label>
-                        <input type="text" class="form-control" id="newUsername" name="newUsername" required>
+                        <label for="newUsernameInput" class="form-label primary-color">Username</label>
+                        <input type="text" class="form-control" id="newUsernameInput" name="newUsername" required>
+                        <div class="invalid-feedback">
+                            Username already exists
+                        </div>
                     </div>
                 </form>
             </div>
@@ -49,9 +52,10 @@
 
 <script>
     function submitUsernameChange() {
-        const newUsername = document.getElementById('newUsername').value;
+        const newUsernameInput = document.getElementById('newUsernameInput');
+        const newUsername = newUsernameInput.value.trim();
 
-        fetch('/edit-profile/', {
+        fetch("{% url 'edit-profile' %}", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -59,11 +63,13 @@
             },
             body: JSON.stringify({username: newUsername})
         })
-            .then(() => {
-                location.reload(); // Reload the page to see the new publication
-            })
-            .catch((error) => {
-                console.error('Error:', error);
+            .then(response => response.json())
+            .then(data => {
+                if (data.errors) {
+                    newUsernameInput.classList.add('is-invalid');
+                } else {
+                    window.location.reload();
+                }
             });
     }
 </script>

@@ -14,18 +14,17 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-
+from django.conf.urls.static import static
 from django.urls import path
-from django.contrib import admin
 
 import authentication.views
 import publication.views
 import userprofile.views
+from cloudintegration import settings
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('',authentication.views.welcome_page, name='welcome'),
-    path('login',authentication.views.login_page, name='login'),
+    path('login/',authentication.views.login_page, name='login'),
     path('logout/',authentication.views.logout_user, name='logout'),
     path('register/',authentication.views.registration_page, name='register'),
     path('home/', publication.views.home_page, name='home'),
@@ -35,6 +34,6 @@ urlpatterns = [
     path('delete/<int:publication_id>/', publication.views.delete_publication, name='delete'),
     path('edit/<int:publication_id>/', publication.views.edit_publication, name='edit'),
     path('profile/', userprofile.views.profile_page, name='profile'),
-    path('edit-profile/', userprofile.views.edit_profile, name='edit_profile'),
+    path('edit-profile/', userprofile.views.edit_profile, name='edit-profile'),
 
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
